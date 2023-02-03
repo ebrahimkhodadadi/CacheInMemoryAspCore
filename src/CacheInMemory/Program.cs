@@ -1,35 +1,46 @@
-namespace CacheInMemory
+
+using CacheService.Repository;
+
+try
 {
-    public class Program
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+
+    //Serilog.Log.Information("Starting VMS API");
+
+    builder.Services.AddMemoryCache();
+    builder.Services.AddScoped(typeof(ICacheService<>), typeof(CacheService<>));
+
+    builder.Services.AddControllers();
+
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    //Serilog.Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    //Serilog.Log.Information("Server Shutting down...");
+    //Log.CloseAndFlush();
 }
