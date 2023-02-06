@@ -1,5 +1,5 @@
 
-using CacheService.Repository;
+using CacheService;
 
 try
 {
@@ -9,8 +9,7 @@ try
 
     //Serilog.Log.Information("Starting VMS API");
 
-    builder.Services.AddMemoryCache();
-    builder.Services.AddScoped(typeof(ICacheService<>), typeof(CacheService<>));
+    builder.Services.AddCacheService();
 
     builder.Services.AddControllers();
 
