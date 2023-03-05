@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux]
     env:
        DOTNET_INSTALL_DIR: "/home"
     steps:
@@ -14,8 +14,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Root access
-      run: sudo -i
     - name: Restore dependencies
       run: dotnet restore src/CacheInMemory/CacheInMemory.csproj
     - name: Build
