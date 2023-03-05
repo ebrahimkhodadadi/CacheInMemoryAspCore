@@ -6,6 +6,10 @@ jobs:
   build:
 
     runs-on: [self-hosted, linux]
+    
+    env:
+      DOTNET_INSTALL_DIR: "./.dotnet"
+      
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -13,8 +17,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: sudo dotnet restore src/CacheInMemory/CacheInMemory.csproj
+      run: dotnet restore src/CacheInMemory/CacheInMemory.csproj
     - name: Build
-      run: sudo dotnet build src/CacheInMemory/CacheInMemory.csproj --no-restore
+      run: dotnet build src/CacheInMemory/CacheInMemory.csproj --no-restore
     - name: Publish
-      run: sudo dotnet publish src/CacheInMemory/CacheInMemory.csproj -c Release -o website
+      run: dotnet publish src/CacheInMemory/CacheInMemory.csproj -c Release -o website
