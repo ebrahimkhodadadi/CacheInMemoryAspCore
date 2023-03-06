@@ -11,3 +11,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: publish docker image
       run: docker build -t aspcorecache:latest src/.
+    - name: deploy
+      run: docker run --rm -d -p 443:443 -p 80:80 --name aspcorecache aspcache
