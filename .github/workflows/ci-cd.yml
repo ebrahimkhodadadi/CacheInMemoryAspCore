@@ -1,16 +1,13 @@
 name: .NET
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
 
     runs-on: [self-hosted, linux]
     
-    env:
-      DOTNET_INSTALL_DIR: "./.dotnet"
-      
     steps:
     - uses: actions/checkout@v3
     - name: publish docker image
-      run: docker build -t sepehrccddd:latest src/CacheInMemory/.
+      run: docker run hello-world
