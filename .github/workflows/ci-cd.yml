@@ -1,0 +1,13 @@
+name: .NET
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, linux]
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: publish docker image
+      run: docker build -t aspcorecache:latest src/.
